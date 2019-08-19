@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-MyCamera::MyCamera()
+Camera::Camera()
 {
 	lookDir = vec3(0.0f, 0.0f, -1.0f);
 	lookRight = vec3(1.0f, 0.0f, 0.0f);
@@ -8,7 +8,7 @@ MyCamera::MyCamera()
 	eyePos = vec3(0.0, 0.0, 0.0);
 }
 
-void MyCamera::Init(vec3 pos, vec3 point)
+void Camera::Init(vec3 pos, vec3 point)
 {
 	eyePos = pos;
 	lookAtPoint = point;
@@ -20,7 +20,7 @@ void MyCamera::Init(vec3 pos, vec3 point)
 	up = cross(lookDir, lookLeft);
 }
 
-void MyCamera::SetView()
+void Camera::SetView()
 {
 	//lookDir = normalize(lookAtPoint - eyePos);
 	//lookAtPoint用eyepos加上lookDir即可
@@ -28,17 +28,17 @@ void MyCamera::SetView()
 	//view *= rotate(mat4(1.0f), 45.0f, vec3(0.0, 1.0, 0.0));
 }
 
-void MyCamera::SetPro()
+void Camera::SetPro()
 {
 	pro = perspective(45.0f, ((float)1200) / (1000), 0.1f, 1000.0f);
 }
 
-void MyCamera::SetOrtho(float left, float right, float bottom, float up, float near, float far)
+void Camera::SetOrtho(float left, float right, float bottom, float up, float near, float far)
 {
 	pro = ortho(left, right, bottom, up, near, far);
 }
 
-void MyCamera::Walk(float dis)
+void Camera::Walk(float dis)
 {
 	//获取眼睛看向的方向
 	//lookDir = normalize(lookAtPoint - eyePos);
@@ -47,7 +47,7 @@ void MyCamera::Walk(float dis)
 	lookAtPoint += lookDir * vec3(dis);
 }
 
-void MyCamera::LRMove(float dis)
+void Camera::LRMove(float dis)
 {
 	//lookRight = normalize(cross(lookDir, lookUp));
 
@@ -55,7 +55,7 @@ void MyCamera::LRMove(float dis)
 	lookAtPoint += lookLeft * vec3(dis);
 }
 
-void MyCamera::LRRotate(float dis)
+void Camera::LRRotate(float dis)
 {
 	//lookDir = normalize(lookAtPoint - eyePos);
 	float dist = length(lookAtPoint - eyePos);

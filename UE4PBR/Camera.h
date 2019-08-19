@@ -2,7 +2,7 @@
 #include<glm.hpp>
 #include<gtc\matrix_transform.hpp>
 using namespace glm;
-class MyCamera
+class Camera
 {
 public:
 	vec3 eyePos;
@@ -16,7 +16,7 @@ public:
 	vec3 lookLeft;
 	vec3 lookUp;
 public:
-	MyCamera();
+	Camera();
 	void Init(vec3 pos, vec3 point);
 	void SetView();
 	void SetPro();																				//设置透视投影矩阵
