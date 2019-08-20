@@ -1,6 +1,6 @@
 #include "Transform.h"
 
-void Transform::SetMatrix(mat4 camView, mat4 camProj)
+void Transform::SetMatrix()
 {
 	world = translate(mat4(1.0), position);
 	world = scale(world, scaler);
@@ -11,7 +11,7 @@ void Transform::SetMatrix(mat4 camView, mat4 camProj)
 	if (rotation.z != 0)
 		world = rotate(world, rotation.z, vec3(0.0, 0.0, 1.0));
 	worldInvTranspose = transpose(inverse(world));
-	worldViewProj = camProj * camView * world;
+	worldViewProj = Camera::getMainCamera()->pro * Camera::getMainCamera()->view * world;
 }
 
 void Transform::MoveByDir(vec3 dir, float distant)

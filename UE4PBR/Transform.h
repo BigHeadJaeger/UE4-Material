@@ -4,6 +4,7 @@
 #include<gtc\matrix_transform.hpp>
 #include<gtc\type_ptr.hpp>
 #include<vector>
+#include"Camera.h"
 using namespace glm;
 
 class Transform
@@ -33,7 +34,7 @@ public:
 		worldInvTranspose = mat4();
 	}
 
-	void SetMatrix(mat4 camView, mat4 camProj);
+	void SetMatrix();
 
 	void MoveByDir(vec3 dir, float distant);
 	void MoveByVector(vec3 displacement);

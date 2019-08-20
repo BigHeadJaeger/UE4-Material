@@ -2,10 +2,13 @@
 
 Camera::Camera()
 {
+	up = vec3(0.0, 1.0, 0.0);
+	lookLeft = vec3(-1.0, 0.0, 0.0);
+	lookAtPoint = vec3(0.0, 0.0, 0.0);
 	lookDir = vec3(0.0f, 0.0f, -1.0f);
-	lookRight = vec3(1.0f, 0.0f, 0.0f);
-	lookUp = vec3(0.0f, 1.0f, 0.0f);
 	eyePos = vec3(0.0, 0.0, 0.0);
+	view = mat4(0);
+	pro = mat4(0);
 }
 
 void Camera::Init(vec3 pos, vec3 point)

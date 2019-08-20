@@ -4,6 +4,9 @@
 using namespace glm;
 class Camera
 {
+private:
+	static Camera* MainCamera;
+	Camera();
 public:
 	vec3 eyePos;
 	vec3 lookAtPoint;
@@ -11,12 +14,19 @@ public:
 	mat4 view;
 	mat4 pro;
 	//相机空间的三个向量
-	vec3 lookDir;
-	vec3 lookRight;
 	vec3 lookLeft;
-	vec3 lookUp;
+	vec3 lookDir;
+	//vec3 lookRight;
+	//vec3 lookUp;
 public:
-	Camera();
+	static Camera* getMainCamera()
+	{
+		if (MainCamera == NULL)
+		{
+			MainCamera = new Camera();
+		}
+		return MainCamera;
+	}
 	void Init(vec3 pos, vec3 point);
 	void SetView();
 	void SetPro();																				//设置透视投影矩阵
@@ -27,3 +37,4 @@ public:
 	void LRRotate(float dis);
 };
 
+Camera* Camera::MainCamera = NULL;
