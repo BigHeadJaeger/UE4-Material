@@ -4,6 +4,7 @@
 #include<gtc\matrix_transform.hpp>
 #include<gtc\type_ptr.hpp>
 #include<vector>
+#include"Camera.h"
 using namespace glm;
 
 class Transform
@@ -22,26 +23,18 @@ public:
 	//float RotateAngle;				//物体旋转的角度
 
 private:
-	//构造函数
-	Transform()
-	{
-		world = mat4();
-		worldViewProj = mat4();
-		worldInvTranspose = mat4();
 
-		position = vec3(0);
-		scaler = vec3(1.0);
-		rotation = vec3(0);
-	}
-	Transform(vec3 _pos = vec3(0), vec3 _scaler = vec3(1.0), vec3 _rotation = vec3(0)) :position(_pos), scaler(_scaler), rotation(_rotation) 
-	{
-		world = mat4();
-		worldViewProj = mat4();
-		worldInvTranspose = mat4();
-	}
 
 public:
-	void SetMatrix(mat4 camView, mat4 camProj);
+	//构造函数
+	Transform(vec3 _pos = vec3(0), vec3 _scaler = vec3(1.0), vec3 _rotation = vec3(0)) :position(_pos), scaler(_scaler), rotation(_rotation)
+	{
+		world = mat4();
+		worldViewProj = mat4();
+		worldInvTranspose = mat4();
+	}
+
+	void SetMatrix();
 
 	void MoveByDir(vec3 dir, float distant);
 	void MoveByVector(vec3 displacement);
