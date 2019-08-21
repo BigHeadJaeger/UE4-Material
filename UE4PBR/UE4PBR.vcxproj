@@ -129,6 +129,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="PublicStruct.h" />
+    <ClInclude Include="Rander.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Transform.h" />
   </ItemGroup>

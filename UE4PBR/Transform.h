@@ -34,8 +34,6 @@ public:
 		worldInvTranspose = mat4();
 	}
 
-	void SetMatrix();
-
 	void MoveByDir(vec3 dir, float distant);
 	void MoveByVector(vec3 displacement);
 	void SetPosition(vec3 _position);
