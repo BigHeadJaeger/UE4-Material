@@ -124,13 +124,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Component.h" />
+    <ClInclude Include="MeshObject.h" />
     <ClInclude Include="NewObject.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="PublicStruct.h" />
-    <ClInclude Include="Rander.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +138,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="源.cpp" />
   </ItemGroup>

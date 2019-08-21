@@ -1,13 +1,13 @@
 #pragma once
-#include<glm.hpp>
-#include<gtc\matrix_transform.hpp>
-#include<gtc\type_ptr.hpp>
-#include<SOIL.h>
-
-#include"Program.h"
-#include"Camera.h"
-#include"Object.h"
-using namespace glm;
+//#include<glm.hpp>
+//#include<gtc\matrix_transform.hpp>
+//#include<gtc\type_ptr.hpp>
+//#include<SOIL.h>
+//
+//#include"Program.h"
+//#include"Camera.h"
+//#include"Object.h"
+//using namespace glm;
 class MyScene
 {
 private:

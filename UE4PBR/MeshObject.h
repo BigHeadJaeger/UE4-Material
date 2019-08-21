@@ -3,5 +3,8 @@
 
 class MeshObject:public Object
 {
+private:
+
+public:
 
 };

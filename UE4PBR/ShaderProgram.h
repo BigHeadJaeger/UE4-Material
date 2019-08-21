@@ -1,10 +1,11 @@
 //与OpenGLshader配置相关的各种变量和方法
 #include<GL/glew.h>
+#include<SOIL.h>
 #include"Transform.h"
 #pragma once
 class ShaderProgram
 {
-protected:
+public:
 	//物体的坐标属性
 	mat4x4 world;					//世界矩阵
 	mat4x4 worldViewProj;			//最终坐标转换矩阵
@@ -47,4 +48,6 @@ public:
 	}
 
 	void SetMatrix(Transform& t);
+	void InitTexture(GLuint& texID, string texPath);		//生成纹理对象并绑定数据(将图片转化为纹理数据，根据不同的ID设置相应的纹理)
+
 };

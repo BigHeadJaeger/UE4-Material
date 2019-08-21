@@ -1,14 +1,14 @@
-#pragma once
-#include"PublicStruct.h"
-#include<gtc\matrix_transform.hpp>
-#include<gtc\type_ptr.hpp>
-//#include"Generate.h"
-#include<vector>
-#include <fstream>
-#include <sstream>
-#include<iostream>
-#include<GL/glew.h>
-#include<SOIL.h>
+//#pragma once
+//#include"PublicStruct.h"
+//#include<gtc\matrix_transform.hpp>
+//#include<gtc\type_ptr.hpp>
+////#include"Generate.h"
+//#include<vector>
+//#include <fstream>
+//#include <sstream>
+//#include<iostream>
+//#include<GL/glew.h>
+//#include<SOIL.h>
 using namespace std;
 
 
