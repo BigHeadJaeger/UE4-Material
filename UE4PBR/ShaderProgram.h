@@ -1,7 +1,18 @@
 //与OpenGLshader配置相关的各种变量和方法
 #include<GL/glew.h>
 #include<SOIL.h>
+#include<OpenMesh/Core/IO/MeshIO.hh>
+#include<OpenMesh/Core/Mesh/TriMesh_ArrayKernelT.hh>
 #include"Transform.h"
+#include"string"
+using namespace std;
+typedef OpenMesh::TriMesh_ArrayKernelT<> Mesh;
+
+struct MeshData
+{
+	Mesh mesh;			//网格数据
+	bool providedTex;	//记录文件是否含有纹理坐标
+};
 #pragma once
 class ShaderProgram
 {
@@ -49,5 +60,5 @@ public:
 
 	void SetMatrix(Transform& t);
 	void InitTexture(GLuint& texID, string texPath);		//生成纹理对象并绑定数据(将图片转化为纹理数据，根据不同的ID设置相应的纹理)
-
+	void InitVertexBuffer(MeshData& mesh);							
 };
