@@ -36,10 +36,10 @@
     <ClInclude Include="NewObject.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ShaderProgram.h">
+    <ClInclude Include="MeshObject.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="MeshObject.h">
+    <ClInclude Include="ShaderData.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -62,7 +62,13 @@
     <ClCompile Include="Transform.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ShaderProgram.cpp">
+    <ClCompile Include="MeshObject.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="NewObject.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderData.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

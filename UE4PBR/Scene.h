@@ -8,6 +8,7 @@
 //#include"Camera.h"
 //#include"Object.h"
 //using namespace glm;
+#include"MeshObject.h"
 class MyScene
 {
 private:
@@ -38,9 +39,11 @@ private:
 	float sphereAo;
 	GLuint sphereNormalT;*/
 
-	Object myBox;
-	Object myGrid;
-	Object myBucket;
+	//Object myBox;
+	//Object myGrid;
+	//Object myBucket;
+
+	MeshObject cow;
 
 
 	//灯光
@@ -55,24 +58,24 @@ private:
 
 public:
 	//相机
-	MyCamera camera;
-
+	//MyCamera camera;
+	Camera mainCamera;
 
 	//---------------------------------------------------------------------------------
 
 private:
-	void DrawElement(Object & obj, ShaderProgram&p);			//绘制物体(里面包括物体各矩阵的传递和纹理的传递，参数为指定使用哪些贴图)
-	void DrawDepthTexture(Object& obj, ShaderProgram&p);
+	//void DrawElement(Object & obj, ShaderProgram&p);			//绘制物体(里面包括物体各矩阵的传递和纹理的传递，参数为指定使用哪些贴图)
+	//void DrawDepthTexture(Object& obj, ShaderProgram&p);
 
 
-	void SetTexture(GLuint & texId, int num, GLenum texNum, string samplerName, ShaderProgram&p);			//将前面生成好的Texture传入shader中的采样器
+	//void SetTexture(GLuint & texId, int num, GLenum texNum, string samplerName, ShaderProgram&p);			//将前面生成好的Texture传入shader中的采样器
 
 
 	//根据不同类型的值用重载的方式传入shader中
-	void SetUniform(string valueName, mat4x4& value, ShaderProgram&p);
-	void SetUniform(string valueName, vec4& value, ShaderProgram&p);
-	void SetUniform(string valueName, vec3& value, ShaderProgram&p);
-	void SetUniform(string valueName, float value, ShaderProgram&p);
+	//void SetUniform(string valueName, mat4x4& value, ShaderProgram&p);
+	//void SetUniform(string valueName, vec4& value, ShaderProgram&p);
+	//void SetUniform(string valueName, vec3& value, ShaderProgram&p);
+	//void SetUniform(string valueName, float value, ShaderProgram&p);
 
 
 

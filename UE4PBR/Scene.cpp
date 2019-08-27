@@ -3,159 +3,159 @@
 #include<GLFW\glfw3.h>
 
 
-void MyScene::DrawElement(Object & obj, ShaderProgram & p)
-{
-	glBindVertexArray(obj.VAO);				//绑定前面设置好的VAO
-										//传递坐标变换矩阵
-	SetUniform("worldViewProj", obj.WorldViewProj, p);
-	SetUniform("world", obj.World, p);
-	SetUniform("worldInvTranspose", obj.WorldInvTranspose, p);
+//void MyScene::DrawElement(Object & obj, ShaderProgram & p)
+//{
+//	glBindVertexArray(obj.VAO);				//绑定前面设置好的VAO
+//										//传递坐标变换矩阵
+//	SetUniform("worldViewProj", obj.WorldViewProj, p);
+//	SetUniform("world", obj.World, p);
+//	SetUniform("worldInvTranspose", obj.WorldInvTranspose, p);
+//
+//	SetUniform("depthBiasMVP", depthBiasMVP, p);
+//
+//
+//	//根据参数上对纹理的选择，将需要的纹理传入着色器
+//	//先将是否使用纹理传入shader
+//	SetUniform("useTexture", obj.BuseTexture, p);
+//	//tempJudge = glGetUniformLocation(p.p, "useTexture");
+//	//glUniform1i(tempJudge, obj.BuseTexture);
+//	if (obj.BuseTexture)
+//	{
+//		//当物体使用纹理且有纹理坐标
+//		if (obj.BisTexture)
+//		{
+//			//基础反射贴图
+//			SetUniform("useAlbedo", obj.BAlbedo, p);
+//			if (obj.BAlbedo)
+//			{
+//				SetTexture(obj.TAlbedo, 0, GL_TEXTURE0, "albedoMap", p);
+//
+//			}
+//
+//			//法线贴图
+//			SetUniform("useNormal", obj.BNormal, p);
+//			if (obj.BNormal)
+//			{
+//				SetTexture(obj.TNormal, 1, GL_TEXTURE1, "normalMap", p);
+//
+//			}
+//
+//			//金属度贴图
+//			SetUniform("useMetallic", obj.BMetallic, p);
+//			if (obj.BMetallic)
+//			{
+//				SetTexture(obj.TMetallic, 2, GL_TEXTURE2, "metallicMap", p);
+//
+//			}
+//			else
+//			{
+//				//此处暂时直接将没有金属贴图的金属度用数字传入shader
+//				SetUniform("metallicN", 0.2f, p);
+//			}
+//
+//			//粗糙贴图
+//			SetUniform("useRoughness", obj.BRoughness, p);
+//			if (obj.BRoughness)
+//			{
+//				SetTexture(obj.TRoughness, 3, GL_TEXTURE3, "roughnessMap", p);
+//
+//			}
+//
+//			//环境光ao贴图
+//			SetUniform("useAO", obj.BAo, p);
+//			if (obj.BAo)
+//			{
+//				SetTexture(obj.TAo, 4, GL_TEXTURE4, "aoMap", p);
+//
+//			}
+//
+//
+//		}
+//
+//		//阴影贴图（与其它的纹理不是同一种类型，不需要物体自身的纹理坐标）
+//		SetUniform("useShadowTex", obj.BShadowTex, p);
+//		if (obj.BShadowTex)
+//		{
+//			SetTexture(obj.TShadowTex, 5, GL_TEXTURE5, "shadowTex", p);
+//		}
+//	}
+//
+//	//将物体是否接收光照传入shader
+//	/*GLuint useLight = glGetUniformLocation(p.p, "useLight");
+//	glUniform1i(useLight, obj.BReceiveLight);*/
+//	/*if (obj.BReceiveLight)
+//	{
+//		SetUniform("material.ambient", obj.Material.ambient, p);
+//		SetUniform("material.diffuse", obj.Material.diffuse, p);
+//		SetUniform("material.specular", obj.Material.specular, p);
+//		SetUniform("material.shiness", obj.Material.shiness, p);
+//	}*/
+//
+//
+//
+//
+//	if (obj.indexType == ObjIndexType::Triangles)
+//		glDrawElements(GL_TRIANGLES, obj.renderIndex.size(), GL_UNSIGNED_INT, 0);
+//	else if (obj.indexType == ObjIndexType::Quad)
+//		glDrawElements(GL_QUADS, obj.renderIndex.size(), GL_UNSIGNED_INT, 0);
+//
+//	glBindVertexArray(0);
+//}
 
-	SetUniform("depthBiasMVP", depthBiasMVP, p);
-
-
-	//根据参数上对纹理的选择，将需要的纹理传入着色器
-	//先将是否使用纹理传入shader
-	SetUniform("useTexture", obj.BuseTexture, p);
-	//tempJudge = glGetUniformLocation(p.p, "useTexture");
-	//glUniform1i(tempJudge, obj.BuseTexture);
-	if (obj.BuseTexture)
-	{
-		//当物体使用纹理且有纹理坐标
-		if (obj.BisTexture)
-		{
-			//基础反射贴图
-			SetUniform("useAlbedo", obj.BAlbedo, p);
-			if (obj.BAlbedo)
-			{
-				SetTexture(obj.TAlbedo, 0, GL_TEXTURE0, "albedoMap", p);
-
-			}
-
-			//法线贴图
-			SetUniform("useNormal", obj.BNormal, p);
-			if (obj.BNormal)
-			{
-				SetTexture(obj.TNormal, 1, GL_TEXTURE1, "normalMap", p);
-
-			}
-
-			//金属度贴图
-			SetUniform("useMetallic", obj.BMetallic, p);
-			if (obj.BMetallic)
-			{
-				SetTexture(obj.TMetallic, 2, GL_TEXTURE2, "metallicMap", p);
-
-			}
-			else
-			{
-				//此处暂时直接将没有金属贴图的金属度用数字传入shader
-				SetUniform("metallicN", 0.2f, p);
-			}
-
-			//粗糙贴图
-			SetUniform("useRoughness", obj.BRoughness, p);
-			if (obj.BRoughness)
-			{
-				SetTexture(obj.TRoughness, 3, GL_TEXTURE3, "roughnessMap", p);
-
-			}
-
-			//环境光ao贴图
-			SetUniform("useAO", obj.BAo, p);
-			if (obj.BAo)
-			{
-				SetTexture(obj.TAo, 4, GL_TEXTURE4, "aoMap", p);
-
-			}
-
-
-		}
-
-		//阴影贴图（与其它的纹理不是同一种类型，不需要物体自身的纹理坐标）
-		SetUniform("useShadowTex", obj.BShadowTex, p);
-		if (obj.BShadowTex)
-		{
-			SetTexture(obj.TShadowTex, 5, GL_TEXTURE5, "shadowTex", p);
-		}
-	}
-
-	//将物体是否接收光照传入shader
-	/*GLuint useLight = glGetUniformLocation(p.p, "useLight");
-	glUniform1i(useLight, obj.BReceiveLight);*/
-	/*if (obj.BReceiveLight)
-	{
-		SetUniform("material.ambient", obj.Material.ambient, p);
-		SetUniform("material.diffuse", obj.Material.diffuse, p);
-		SetUniform("material.specular", obj.Material.specular, p);
-		SetUniform("material.shiness", obj.Material.shiness, p);
-	}*/
-
-
-
-
-	if (obj.indexType == ObjIndexType::Triangles)
-		glDrawElements(GL_TRIANGLES, obj.renderIndex.size(), GL_UNSIGNED_INT, 0);
-	else if (obj.indexType == ObjIndexType::Quad)
-		glDrawElements(GL_QUADS, obj.renderIndex.size(), GL_UNSIGNED_INT, 0);
-
-	glBindVertexArray(0);
-}
-
-void MyScene::DrawDepthTexture(Object & obj, ShaderProgram & p)
-{
-	glBindVertexArray(obj.VAO);				//绑定前面设置好的VAO
-
-	SetUniform("world", obj.World, p);
-	SetUniform("depthMVP", depthMVP, p);
-
-	if (obj.indexType == ObjIndexType::Triangles)
-		glDrawElements(GL_TRIANGLES, obj.renderIndex.size(), GL_UNSIGNED_INT, 0);
-	else if (obj.indexType == ObjIndexType::Quad)
-		glDrawElements(GL_QUADS, obj.renderIndex.size(), GL_UNSIGNED_INT, 0);
-
-	glBindVertexArray(0);
-
-}
-
-void MyScene::SetTexture(GLuint & texId, int num, GLenum texNum, string samplerName, ShaderProgram & p)
-{
-	GLuint texLocation;
-	glActiveTexture(texNum);							//激活纹理单元(纹理位置)0。
-	glBindTexture(GL_TEXTURE_2D, texId);				//将纹理对象绑定到当前激活的纹理单元处
-	//接下来指定采样器对应哪个纹理单元
-	texLocation = glGetUniformLocation(p.p, samplerName.c_str());	//获取采样器的location
-	glUniform1i(texLocation, num);									//指定采样器对应当前绑定的纹理单元0
-
-}
-
-void MyScene::SetUniform(string valueName, mat4x4 &value, ShaderProgram&p)
-{
-	GLuint location;
-	location = glGetUniformLocation(p.p, valueName.c_str());
-	glUniformMatrix4fv(location, 1, GL_FALSE, value_ptr(value));
-}
-
-void MyScene::SetUniform(string valueName, vec4 & value, ShaderProgram&p)
-{
-	GLuint location;
-	location = glGetUniformLocation(p.p, valueName.c_str());
-	glUniform4fv(location, 1, value_ptr(value));
-}
-
-void MyScene::SetUniform(string valueName, vec3 & value, ShaderProgram&p)
-{
-	GLuint location;
-	location = glGetUniformLocation(p.p, valueName.c_str());
-	glUniform3fv(location, 1, value_ptr(value));
-}
-
-void MyScene::SetUniform(string valueName, float value, ShaderProgram&p)
-{
-	GLuint location;
-	location = glGetUniformLocation(p.p, valueName.c_str());
-	glUniform1f(location, value);
-}
+//void MyScene::DrawDepthTexture(Object & obj, ShaderProgram & p)
+//{
+//	glBindVertexArray(obj.VAO);				//绑定前面设置好的VAO
+//
+//	SetUniform("world", obj.World, p);
+//	SetUniform("depthMVP", depthMVP, p);
+//
+//	if (obj.indexType == ObjIndexType::Triangles)
+//		glDrawElements(GL_TRIANGLES, obj.renderIndex.size(), GL_UNSIGNED_INT, 0);
+//	else if (obj.indexType == ObjIndexType::Quad)
+//		glDrawElements(GL_QUADS, obj.renderIndex.size(), GL_UNSIGNED_INT, 0);
+//
+//	glBindVertexArray(0);
+//
+//}
+//
+//void MyScene::SetTexture(GLuint & texId, int num, GLenum texNum, string samplerName, ShaderProgram & p)
+//{
+//	GLuint texLocation;
+//	glActiveTexture(texNum);							//激活纹理单元(纹理位置)。
+//	glBindTexture(GL_TEXTURE_2D, texId);				//将纹理对象绑定到当前激活的纹理单元处
+//	//接下来指定采样器对应哪个纹理单元
+//	texLocation = glGetUniformLocation(p.p, samplerName.c_str());	//获取采样器的location
+//	glUniform1i(texLocation, num);									//指定采样器对应当前绑定的纹理单元0
+//
+//}
+//
+//void MyScene::SetUniform(string valueName, mat4x4 &value, ShaderProgram&p)
+//{
+//	GLuint location;
+//	location = glGetUniformLocation(p.p, valueName.c_str());
+//	glUniformMatrix4fv(location, 1, GL_FALSE, value_ptr(value));
+//}
+//
+//void MyScene::SetUniform(string valueName, vec4 & value, ShaderProgram&p)
+//{
+//	GLuint location;
+//	location = glGetUniformLocation(p.p, valueName.c_str());
+//	glUniform4fv(location, 1, value_ptr(value));
+//}
+//
+//void MyScene::SetUniform(string valueName, vec3 & value, ShaderProgram&p)
+//{
+//	GLuint location;
+//	location = glGetUniformLocation(p.p, valueName.c_str());
+//	glUniform3fv(location, 1, value_ptr(value));
+//}
+//
+//void MyScene::SetUniform(string valueName, float value, ShaderProgram&p)
+//{
+//	GLuint location;
+//	location = glGetUniformLocation(p.p, valueName.c_str());
+//	glUniform1f(location, value);
+//}
 
 
 void MyScene::Init()
@@ -177,7 +177,7 @@ void MyScene::Init()
 	lightColor = vec3(400.f, 400.f, 400.f);
 
 	//指定相机初始位置
-	camera.Init(vec3(0, 2, 4), vec3(0, 0, 0));
+	mainCamera.Init(vec3(0, 2, 4), vec3(0, 0, 0));
 
 
 
@@ -189,6 +189,9 @@ void MyScene::Init()
 	//boxMetallic = 0.1f;
 	//boxRoughness = 0.6f;
 	//sphereAo = 1.0f;
+	cow.readObjFile("OBJ\\cow.obj");
+	cow.getTransform().SetPosition(vec3(0, 0, 0));
+	cow.getShaderData().bUseTexture = false;
 
 	myBox.InitDirectBox(1, 1, 1);					//顶点、索引信息初始化
 	myBox.InitBuffers();							//缓冲初始化
@@ -237,14 +240,14 @@ void MyScene::Init()
 	//myBox.LightUseInfo(true);
 
 
-	STInit();
+	//STInit();
 }
 
 void MyScene::Update()
 {
 	//计算视角矩阵
 
-	camera.SetView();
+	mainCamera.SetView();
 	//mat4 view = lookAt(eyePos, lookAtPoint, up);
 
 
@@ -253,12 +256,12 @@ void MyScene::Update()
 
 	/*mat4 pro;
 	pro = perspective(45.0f, ((float)1200) / (1000), 0.1f, 1000.0f);*/
-	camera.SetPro();
+	mainCamera.SetPro();
 
-
-	myBox.SetObjMat(camera.view, camera.pro);
-	myBucket.SetObjMat(camera.view, camera.pro);
-	myGrid.SetObjMat(camera.view, camera.pro);
+	cow.SetMatrix(mainCamera);
+	//myBox.SetObjMat(camera.view, camera.pro);
+	//myBucket.SetObjMat(camera.view, camera.pro);
+	//myGrid.SetObjMat(camera.view, camera.pro);
 
 	//根据物体世界矩阵、视角矩阵、投影矩阵计算出每一个物体的worldviewproj(如果物体运动则先计算物体的世界矩阵和逆转矩阵)
 

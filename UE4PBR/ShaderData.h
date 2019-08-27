@@ -1,10 +1,13 @@
+#pragma once
 //与OpenGLshader配置相关的各种变量和方法
 #include<GL/glew.h>
 #include<SOIL.h>
 #include<OpenMesh/Core/IO/MeshIO.hh>
 #include<OpenMesh/Core/Mesh/TriMesh_ArrayKernelT.hh>
+#include<string>
+
 #include"Transform.h"
-#include"string"
+#include"Camera.h"
 using namespace std;
 typedef OpenMesh::TriMesh_ArrayKernelT<> Mesh;
 
@@ -13,9 +16,13 @@ struct MeshData
 	Mesh mesh;			//网格数据
 	bool providedTex;	//记录文件是否含有纹理坐标
 };
-#pragma once
-class ShaderProgram
+
+
+class ShaderData
 {
+private:
+
+
 public:
 	//物体的坐标属性
 	mat4x4 world;					//世界矩阵
@@ -43,7 +50,7 @@ public:
 	bool bShadowTex;
 
 public:
-	ShaderProgram()
+	ShaderData()
 	{
 		world = mat4(0);
 		worldViewProj = mat4(0);
@@ -58,7 +65,7 @@ public:
 		bShadowTex = false;
 	}
 
-	void SetMatrix(Transform& t);
+	void SetMatrix(Transform& t, Camera& camera);
 	void InitTexture(GLuint& texID, string texPath);		//生成纹理对象并绑定数据(将图片转化为纹理数据，根据不同的ID设置相应的纹理)
 	void InitVertexBuffer(MeshData& mesh);							
 };

@@ -1,6 +1,6 @@
-#include "ShaderProgram.h"
+#include "ShaderData.h"
 
-void ShaderProgram::SetMatrix(Transform& t)
+void ShaderData::SetMatrix(Transform& t, Camera& camera)
 {
 	world = translate(mat4(1.0), t.position);
 	world = scale(world, t.scaler);
@@ -11,19 +11,19 @@ void ShaderProgram::SetMatrix(Transform& t)
 	if (t.rotation.z != 0)
 		world = rotate(world, t.rotation.z, vec3(0.0, 0.0, 1.0));
 	worldInvTranspose = transpose(inverse(world));
-	worldViewProj = Camera::getMainCamera()->pro * Camera::getMainCamera()->view * world;
+	worldViewProj = camera.pro * camera.view * world;
 }
 
-void ShaderProgram::InitTexture(GLuint& texID, string texPath)
+void ShaderData::InitTexture(GLuint& texID, string texPath)
 {
-	glGenTextures(1, &texID);
+	glGenTextures(1, &texID);					//生成一个纹理ID
 	glBindTexture(GL_TEXTURE_2D, texID);		//此时绑定到了默认纹理单元0处，在之后的代码中会指定绑定到具体哪个单元
 	//指定贴图方法
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	//文件读取
+	//图片文件读取
 	int width, height;
 	unsigned char* pResult = SOIL_load_image(texPath.c_str(), &width, &height, 0, SOIL_LOAD_RGB);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, pResult);
@@ -34,7 +34,7 @@ void ShaderProgram::InitTexture(GLuint& texID, string texPath)
 	SOIL_free_image_data(pResult);
 }
 
-void ShaderProgram::InitVertex(MeshData& meshData)
+void ShaderData::InitVertexBuffer(MeshData& meshData)
 {
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);

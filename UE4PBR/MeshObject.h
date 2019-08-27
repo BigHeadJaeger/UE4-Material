@@ -1,5 +1,6 @@
-#include"NewObject.h"
 #pragma once
+#include"NewObject.h"
+
 
 class MeshObject:public Object
 {
