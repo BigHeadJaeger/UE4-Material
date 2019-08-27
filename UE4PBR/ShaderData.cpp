@@ -1,6 +1,6 @@
 #include "ShaderData.h"
 
-void ShaderData::SetMatrix(Transform& t, Camera& camera)
+void ShaderData::UpdateMatrix(Transform& t, Camera& camera)
 {
 	world = translate(mat4(1.0), t.position);
 	world = scale(world, t.scaler);
@@ -43,47 +43,90 @@ void ShaderData::InitVertexBuffer(MeshData& meshData)
 	//MyGeometryGenerator::GetInstance()->CreateBox(20.0f, 0.3f, 20.0f, box);
 	//转换到一维数组中
 	std::vector<float> vertexData;
+	vector<float> vertexPos;
+	vector<float> vertexNormal;
+	vector<float> vertexTex;
 	for (Mesh::FaceIter f_it = meshData.mesh.faces_begin(); f_it != meshData.mesh.faces_end(); f_it++)
 	{
-		for (Mesh::FaceVertexCCWIter fv_ccwit = meshData.mesh.fv_ccwbegin(*f_it); fv_ccwit != meshData.mesh.fv_ccwend(*f_it); fv_ccwit++)
+		for (Mesh::FaceVertexIter fv_ccwit = meshData.mesh.fv_iter(*f_it); fv_ccwit.is_valid(); fv_ccwit++)
 		{
-			vertexData.push_back(meshData.mesh.point(*fv_ccwit).data()[0]);
-			vertexData.push_back(meshData.mesh.point(*fv_ccwit).data()[1]);
-			vertexData.push_back(meshData.mesh.point(*fv_ccwit).data()[2]);
-			vertexData.push_back(meshData.mesh.normal(*fv_ccwit).data()[0]);
-			vertexData.push_back(meshData.mesh.normal(*fv_ccwit).data()[1]);
-			vertexData.push_back(meshData.mesh.normal(*fv_ccwit).data()[2]);
+			vertexPos.push_back(meshData.mesh.point(*fv_ccwit).data()[0]);
+			vertexPos.push_back(meshData.mesh.point(*fv_ccwit).data()[1]);
+			vertexPos.push_back(meshData.mesh.point(*fv_ccwit).data()[2]);
+
+			vertexNormal.push_back(meshData.mesh.normal(*fv_ccwit).data()[0]);
+			vertexNormal.push_back(meshData.mesh.normal(*fv_ccwit).data()[1]);
+			vertexNormal.push_back(meshData.mesh.normal(*fv_ccwit).data()[2]);
+
 			if (meshData.providedTex)
 			{
-				vertexData.push_back(meshData.mesh.texcoord2D(*fv_ccwit).data[0]);
-				vertexData.push_back(meshData.mesh.texcoord2D(*fv_ccwit).data[1]);
+				vertexTex.push_back(meshData.mesh.texcoord2D(*fv_ccwit).data()[0]);
+				vertexTex.push_back(meshData.mesh.texcoord2D(*fv_ccwit).data()[1]);
 			}
+
+			//float* test;
+			//test = meshData.mesh.point(*fv_ccwit).data();
+			//vertexData.push_back(meshData.mesh.point(*fv_ccwit).data()[0]);
+			//vertexData.push_back(meshData.mesh.point(*fv_ccwit).data()[1]);
+			//vertexData.push_back(meshData.mesh.point(*fv_ccwit).data()[2]);
+			//cout << test[0] << " " << test[1] << " " << test[2] << endl;
+			//vertexData.push_back(meshData.mesh.normal(*fv_ccwit).data()[0]);
+			//vertexData.push_back(meshData.mesh.normal(*fv_ccwit).data()[1]);
+			//vertexData.push_back(meshData.mesh.normal(*fv_ccwit).data()[2]);
+			//if (meshData.providedTex)
+			//{
+			//	vertexData.push_back(meshData.mesh.texcoord2D(*fv_ccwit).data()[0]);
+			//	vertexData.push_back(meshData.mesh.texcoord2D(*fv_ccwit).data()[1]);
+			//}
 		}
 	}
 
 	//创建顶点buffer
 	glGenBuffers(1, &VertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, VertexBuffer);					//先绑定，在用VAO传值时，就传送的是当前绑定的buffer
-	glBufferData(GL_ARRAY_BUFFER, vertexData.size() * sizeof(float), &vertexData[0], GL_STATIC_DRAW);		//指定数据
-																											//创建索引buffer
+	//glBufferData(GL_ARRAY_BUFFER, vertexData.size() * sizeof(float), &vertexData[0], GL_STATIC_DRAW);		//指定数据
+	if (meshData.providedTex)
+		glBufferData(GL_ARRAY_BUFFER, vertexPos.size() * sizeof(float) + vertexNormal.size() * sizeof(float) + vertexTex.size() * sizeof(float), NULL, GL_STATIC_DRAW);
+	else
+		glBufferData(GL_ARRAY_BUFFER, vertexPos.size() * sizeof(float) + vertexNormal.size() * sizeof(float), NULL, GL_STATIC_DRAW);
+										
+	//创建索引buffer
 	//glGenBuffers(1, &IndexBuffer);
 	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexBuffer);
 	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, renderIndex.size() * sizeof(unsigned), &renderIndex[0], GL_STATIC_DRAW);
 
 	//将顶点buffer中的数据指定到shader中
 	//指定pos数据
-	glEnableVertexAttribArray(0);										//开启索引为0的顶点属性
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);		//第五个代表取数据时的步长，最后一个代表在当前的一个步长内跳过前面多长的信息
-																						//指定normal数据
+	//glEnableVertexAttribArray(0);										//开启索引为0的顶点属性
+	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);		//第五个代表取数据时的步长，最后一个代表在当前的一个步长内跳过前面多长的信息
+	//																					//指定normal数据
+	//glEnableVertexAttribArray(1);
+	//glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));		//每8个步长中的中间三个是法向量数据
+	//if (meshData.providedTex)
+	//{
+	//	glEnableVertexAttribArray(2);
+	//	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	//}																									//指定纹理坐标数据
+
+	glBufferSubData(GL_ARRAY_BUFFER, 0, vertexPos.size() * sizeof(float), &vertexPos[0]);
+	glBufferSubData(GL_ARRAY_BUFFER, vertexPos.size() * sizeof(float), vertexNormal.size() * sizeof(float), &vertexNormal[0]);
+	if (meshData.providedTex)
+	{
+		glBufferSubData(GL_ARRAY_BUFFER, vertexPos.size() * sizeof(float) + vertexNormal.size() * sizeof(float), vertexTex.size() * sizeof(float), &vertexTex[0]);
+	}
+
+	//还需要用glVertexAttribPointer更新顶点属性指针
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));		//每8个步长中的中间三个是法向量数据
-																										//指定纹理坐标数据
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)(vertexPos.size() * sizeof(float)));
 	if (meshData.providedTex)
 	{
 		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)((vertexPos.size() * sizeof(float)) + (vertexNormal.size() * sizeof(float))));
 	}
 
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
 }
