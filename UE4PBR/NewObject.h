@@ -37,10 +37,8 @@ public:
 	ShaderData& getShaderData() { return shaderData; }
 	MeshData& getMeshData() { return meshData; }
 
-	void SetMatrix(Camera&camera)
-	{
-		shaderData.SetMatrix(transformation, camera);
-	}
+	void UpdateMatrix(Camera& camera) { shaderData.UpdateMatrix(transformation, camera); }
+	void InitVertexBuffer() { shaderData.InitVertexBuffer(meshData); }
 
 	void InitAlbedo(string texPath) { shaderData.bAlbedo = true; shaderData.InitTexture(shaderData.tAlbedo, texPath); }
 	void InitMetallic(string texPath) { shaderData.bMetallic = true; shaderData.InitTexture(shaderData.tMetallic, texPath); }

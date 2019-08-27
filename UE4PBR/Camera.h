@@ -16,6 +16,7 @@ public:
 	//vec3 lookRight;
 	//vec3 lookUp;
 public:
+	Camera();
 	//static Camera* getMainCamera()
 	//{
 	//	if (MainCamera == NULL)

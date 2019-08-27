@@ -113,7 +113,7 @@ void Object::Draw(ShaderProgram&p)
 		}
 	}
 
-	glDrawArrays(GL_TRIANGLES, 0, meshData.mesh.n_vertices());
+	glDrawArrays(GL_TRIANGLES, 0, meshData.mesh.n_faces()*3);
 
 	glBindVertexArray(0);
 }

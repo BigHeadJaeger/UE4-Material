@@ -1,5 +1,6 @@
 #pragma once
 #include"Scene.h"
+#include"Const.h"
 #include<GLFW\glfw3.h>
 
 //const GLuint WIDTH = 1200, HEIGHT = 1000;
@@ -75,17 +76,17 @@ int main(void)
 
 void key_callback(GLFWwindow * window, int key, int scancode, int action, int mods)
 {
-	float cameraSpeed = 5.0f*deltaTime;		//设置一个相机移动速度，一帧的时间作为单位
+	float cameraSpeed = 10.0f*deltaTime;		//设置一个相机移动速度，一帧的时间作为单位
 	if (key == GLFW_KEY_W&&action == GLFW_REPEAT)
-		scene.camera.Walk(cameraSpeed);
+		scene.mainCamera.Walk(cameraSpeed);
 	if (key == GLFW_KEY_S&&action == GLFW_REPEAT)
-		scene.camera.Walk(-cameraSpeed);
+		scene.mainCamera.Walk(-cameraSpeed);
 	if (key == GLFW_KEY_A&&action == GLFW_REPEAT)
-		scene.camera.LRMove(cameraSpeed);
+		scene.mainCamera.LRMove(cameraSpeed);
 	if (key == GLFW_KEY_D&&action == GLFW_REPEAT)
-		scene.camera.LRMove(-cameraSpeed);
+		scene.mainCamera.LRMove(-cameraSpeed);
 	if (key == GLFW_KEY_Q&&action == GLFW_REPEAT)
-		scene.camera.LRRotate(cameraSpeed);
+		scene.mainCamera.LRRotate(cameraSpeed);
 	if (key == GLFW_KEY_E&&action == GLFW_REPEAT)
-		scene.camera.LRRotate(-cameraSpeed);
+		scene.mainCamera.LRRotate(-cameraSpeed);
 }
