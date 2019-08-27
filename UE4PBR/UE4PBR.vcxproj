@@ -91,6 +91,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_USE_MATH_DEFINES;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>glfw3.lib;openGL32.lib;glew32s.lib;SOIL.lib;OpenMeshCored.lib;OpenMeshToolsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -124,19 +125,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Component.h" />
+    <ClInclude Include="Const.h" />
+    <ClInclude Include="MeshObject.h" />
     <ClInclude Include="NewObject.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="PublicStruct.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="ShaderData.h" />
     <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="MeshObject.cpp" />
+    <ClCompile Include="NewObject.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="ShaderData.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="源.cpp" />
   </ItemGroup>

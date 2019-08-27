@@ -15,6 +15,7 @@ uniform mat4 depthBiasMVP;			//阴影贴图纹理修正矩阵
 out vec3 posW;					//光照计算需要物体的世界坐标
 out vec3 normalW;				//顶点法向量的世界坐标
 out vec2 TexCoord;				//顶点纹理坐标
+
 out vec4 shadowCoord;			//阴影贴图纹理坐标,同时z坐标也是当前点在光源视角下深度
 
 void main()
