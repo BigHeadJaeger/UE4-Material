@@ -6,13 +6,13 @@ in vec3 posW;
 in vec3 normalW;
 in vec2 TexCoord;
 in vec4 shadowCoord;
-in bool useShadowTex;
+
 
 uniform bool useTexture;
 
 //阴影贴图纹理采样器
 uniform sampler2DShadow shadowTex;
-//uniform bool useShadowTex;
+uniform bool useShadowTex;
 
 //物体PBR材质
 //当前属性的值是否用纹理来决定
