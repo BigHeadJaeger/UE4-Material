@@ -9,6 +9,7 @@ Camera::Camera()
 	eyePos = vec3(0.0, 0.0, 0.0);
 	view = mat4(0);
 	pro = mat4(0);
+	cameraSpeed = 0.0;
 }
 
 void Camera::Init(vec3 pos, vec3 point)
@@ -60,14 +61,30 @@ void Camera::LRMove(float dis)
 
 void Camera::LRRotate(float dis)
 {
-	//lookDir = normalize(lookAtPoint - eyePos);
-	float dist = length(lookAtPoint - eyePos);
+	float dist = length(lookAtPoint - eyePos);					//保留LookAt点到镜头的距离
 	mat4 ro = rotate(mat4(1.0f), dis, vec3(0.0, 1.0f, 0.0));
 
-	lookDir = (ro*vec4(lookDir, 1.0f));
+	lookDir = (ro * vec4(lookDir, 1.0f));
 
 	lookDir = normalize(lookDir);
 
-	lookAtPoint = lookDir * dist;
+	lookAtPoint = lookDir * dist;						//用保留的LookAt点更新
 
+	//更新左方向和上方向
+	lookLeft = cross(vec3(0.0, 1.0, 0.0), lookDir);
+	up = cross(lookDir, lookLeft);
+
+}
+
+void Camera::UDRotate(float dis)
+{
+	float dist = length(lookAtPoint - eyePos);
+	mat4 ro = rotate(mat4(1.0f), -dis, lookLeft);
+
+	lookDir = (ro * vec4(lookDir, 1.0f));
+	lookAtPoint = lookDir * dist;						//用保留的LookAt点更新
+
+	//更新左方向和上方向
+	lookLeft = cross(vec3(0.0, 1.0, 0.0), lookDir);
+	up = cross(lookDir, lookLeft);
 }
