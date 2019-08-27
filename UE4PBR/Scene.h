@@ -51,10 +51,10 @@ private:
 	vec3 lightColor;
 
 
-	GLuint frameBuffer;					//帧缓冲
-	GLuint depthTex;					//深度纹理
-	mat4 depthMVP;						//正交投影变换矩阵
-	mat4 depthBiasMVP;					//用于纹理的修正过的矩阵
+	//GLuint frameBuffer;					//帧缓冲
+	//GLuint depthTex;					//深度纹理
+	//mat4 depthMVP;						//正交投影变换矩阵
+	//mat4 depthBiasMVP;					//用于纹理的修正过的矩阵
 
 public:
 	//相机
@@ -93,9 +93,9 @@ private:
 	void SetTexture();		//生成纹理并绑定数据*/
 
 	//阴影贴图
-	void STInit();						//初始化帧缓冲以及纹理并绑定，初始化时调用一次
-	void STConstructProj(vec3 Pos);		//构建光照处的相机以及投影矩阵，不断更新
+	//void STInit();						//初始化帧缓冲以及纹理并绑定，初始化时调用一次
+	//void STConstructProj(vec3 Pos);		//构建光照处的相机以及投影矩阵，不断更新
 
-	void NormalShadowMap();
+	//void NormalShadowMap();
 
 };

@@ -6,10 +6,13 @@ in vec3 posW;
 in vec3 normalW;
 in vec2 TexCoord;
 in vec4 shadowCoord;
+in bool useShadowTex;
+
+uniform bool useTexture;
 
 //阴影贴图纹理采样器
 uniform sampler2DShadow shadowTex;
-uniform bool useShadowTex;
+//uniform bool useShadowTex;
 
 //物体PBR材质
 //当前属性的值是否用纹理来决定
@@ -106,14 +109,17 @@ vec3 GetNormalFromMap()
 
 void main() 
 {
-	vec3 albedo;
-	float roughness;
-	float ao;
-	float metallic;
+	vec3 color=vec3(1.0,0.0,0.0);
+	if(useTexture)
+	{
+		vec3 albedo;
+		float roughness;
+		float ao;
+		float metallic;
 
-	//从各种贴图中获取数据
-	if(useAlbedo)
-		albedo=pow(texture(albedoMap,TexCoord).rgb,vec3(2.2));			//反射率纹理一般创建在rgb空间，所以需要转换到线性空间
+		//从各种贴图中获取数据
+		if(useAlbedo)
+			albedo=pow(texture(albedoMap,TexCoord).rgb,vec3(2.2));			//反射率纹理一般创建在rgb空间，所以需要转换到线性空间
 		 
 	if(useMetallic)
 		metallic=texture(metallicMap,TexCoord).r;
@@ -175,7 +181,7 @@ void main()
 
 
 	vec3 ambient=vec3(0.03)*albedo*ao;
-	vec3 color=ambient+reflectResult;
+	color=ambient+reflectResult;
 
 	//伽马校正
 	color = color / (color + vec3(1.0));
@@ -191,9 +197,11 @@ void main()
 		if(texture(shadowTex,vec3(shadowCoord.xy,shadowCoord.z-bias))!=1)
 		visibility=0.5;	
 	}
+	color*=visibility;
+	}
 
 
 
-    FragColor = vec4(color*visibility, 1.0); 
+    FragColor = vec4(color, 1.0); 
 	//FragColor = vec4(1.0,0.0,0.0, 1.0); 
 } 

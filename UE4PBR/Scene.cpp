@@ -165,7 +165,7 @@ void MyScene::Init()
 	//´´½¨shader³ÌÐò
 	p1.SetShader("test.vert", "test.frag");
 
-	pShadowTex.SetShader("shadowTex.v", "shadowTex.f");
+	//pShadowTex.SetShader("shadowTex.v", "shadowTex.f");
 
 
 
