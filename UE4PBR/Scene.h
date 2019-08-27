@@ -68,17 +68,6 @@ private:
 	//void DrawDepthTexture(Object& obj, ShaderProgram&p);
 
 
-	//void SetTexture(GLuint & texId, int num, GLenum texNum, string samplerName, ShaderProgram&p);			//将前面生成好的Texture传入shader中的采样器
-
-
-	//根据不同类型的值用重载的方式传入shader中
-	//void SetUniform(string valueName, mat4x4& value, ShaderProgram&p);
-	//void SetUniform(string valueName, vec4& value, ShaderProgram&p);
-	//void SetUniform(string valueName, vec3& value, ShaderProgram&p);
-	//void SetUniform(string valueName, float value, ShaderProgram&p);
-
-
-
 	//shader程序
 	ShaderProgram p1;
 
