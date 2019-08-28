@@ -37,6 +37,9 @@ int main(void)
 	glfwSetKeyCallback(window, key_callback);			//键盘事件
 	//glfwSetInputMode(window, GLFW_STICKY_KEYS, 1);
 
+	//glfwSetMouseButtonCallback(window, mouse_button_callback);		//鼠标按键事件
+
+	//glfwSetCursorPosCallback(window, cursor_position_callback);		//鼠标指针事件
 
 
 	//创建场景
@@ -90,3 +93,37 @@ void key_callback(GLFWwindow * window, int key, int scancode, int action, int mo
 	if (key == GLFW_KEY_E&&action == GLFW_REPEAT)
 		scene.mainCamera.LRRotate(-cameraSpeed);
 }
+
+//void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+//{
+//	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
+//		scene.mouse.mouseRightDown = true;
+//	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE)
+//		scene.mouse.mouseRightDown = false;
+//}
+//
+//void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
+//{
+//	//cout << xpos << "  " << ypos << endl;
+//	if (scene.mouse.mouseRightDown)
+//	{
+//		float disx = scene.mouse.cursorPrePos.x - xpos;
+//		float disy = scene.mouse.cursorPrePos.y - ypos;
+//		scene.camera.LRRotate(disx * deltaTime * 0.5);
+//		scene.camera.UDRotate(disy * deltaTime * 0.5);
+//	}
+//
+//	/*if (scene.mouse.isCatchPoint && scene.mouse.mouseLeftDown)
+//	{
+//		float disx = scene.mouse.cursorPrePos.x - xpos;
+//		float disy = scene.mouse.cursorPrePos.y - ypos;
+//
+//		float temp = deltaTime * 2;
+//		translate(scene.ObjArray()[scene.mouse.catchObjIndex].World, vec3(disx * temp, disy * temp, 0.0));
+//	}*/
+//
+//	scene.mouse.cursorNowPos = scene.mouse.cursorPrePos - vec2(xpos, ypos);
+//
+//	scene.mouse.cursorPrePos.x = xpos;
+//	scene.mouse.cursorPrePos.y = ypos;
+//}

@@ -9,6 +9,7 @@
 //#include"Object.h"
 //using namespace glm;
 #include"MeshObject.h"
+#include"Interaction.h"
 class MyScene
 {
 private:
@@ -60,7 +61,7 @@ public:
 	//相机
 	//MyCamera camera;
 	Camera mainCamera;
-
+	vector<Key> keys;
 	//---------------------------------------------------------------------------------
 
 private:
@@ -75,6 +76,7 @@ private:
 
 public:
 	void Init();			//初始化各种信息
+	void InitKeys();
 	void Update();			//需要动画时，计算各种矩阵（暂时不传入shader中）
 	void Draw();			//绘制场景
 private:

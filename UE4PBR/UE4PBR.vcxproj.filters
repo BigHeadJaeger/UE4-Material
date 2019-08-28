@@ -45,6 +45,9 @@
     <ClInclude Include="Const.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Interaction.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Program.cpp">

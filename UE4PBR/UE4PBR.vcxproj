@@ -126,6 +126,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Const.h" />
+    <ClInclude Include="Interaction.h" />
     <ClInclude Include="MeshObject.h" />
     <ClInclude Include="NewObject.h" />
     <ClInclude Include="Object.h" />

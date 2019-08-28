@@ -79,6 +79,11 @@ void MyScene::Init()
 	//STInit();
 }
 
+void MyScene::InitKeys()
+{
+	keys.push_back(Key(BTNW));
+}
+
 void MyScene::Update()
 {
 
