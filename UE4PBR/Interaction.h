@@ -80,32 +80,34 @@ public:
 	//bool isDown;
 	function<void()> eventFunctionPtr;
 	function<void()> outerFunction;
+private:
+	void EventDown();
+	void EventKeep();
+	void EventUP();
 public:
 	Key(KEYNAME name)
 	{
 		keyName = name;
 	}
 
-	void EventDown();
-	void EventKeep();
-	void EventUP();
+
 	//此函数在update中不断执行传进来的function
 	void Execute();
 
-	//void BindDownEvent() { eventType = EventType::DOWN; }
+	//指定key执行down事件，并且指定一个需要外部函数
 	template<typename F>
 	void BindDownEvent(F f)
 	{
 		eventFunctionPtr = bind(EventDown);
 		outerFunction = bind(f);
 	}
-	template<typename F>
-	void BindDownEvent(F f,float a)
-	{
-		eventFunctionPtr = bind(EventDown);
-		//eventType = EventType::DOWN;
-		outerFunction = bind(f, a);
-	}
+	//template<typename F>
+	//void BindDownEvent(F f,float a)
+	//{
+	//	eventFunctionPtr = bind(EventDown);
+	//	//eventType = EventType::DOWN;
+	//	outerFunction = bind(f, a);
+	//}
 
 	template<typename F>
 	void BindKeepEvent(F f)
@@ -113,12 +115,12 @@ public:
 		eventFunctionPtr = bind(EventDown);
 		outerFunction = bind(f);
 	}
-	template<typename F>
-	void BindKeepEvent(F f, float a)
-	{
-		eventFunctionPtr = bind(EventDown);
-		outerFunction = bind(f, a);
-	}
+	//template<typename F>
+	//void BindKeepEvent(F f, float a)
+	//{
+	//	eventFunctionPtr = bind(EventDown);
+	//	outerFunction = bind(f, a);
+	//}
 
 	template<typename F>
 	void BindUpEvent(F f)
@@ -126,12 +128,12 @@ public:
 		eventFunctionPtr = bind(EventDown);
 		outerFunction = bind(f);
 	}
-	template<typename F>
-	void BindUpEvent(F f, float a)
-	{
-		eventFunctionPtr = bind(EventDown);
-		outerFunction = bind(f, a);
-	}
+	//template<typename F>
+	//void BindUpEvent(F f, float a)
+	//{
+	//	eventFunctionPtr = bind(EventDown);
+	//	outerFunction = bind(f, a);
+	//}
 
 	//void BindUpEvent() { eventType = EventType::UP; }
 	void UnBind()
