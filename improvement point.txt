@@ -1,0 +1,6 @@
+1.向shader中传递数值的函数单独提出来（考虑单例）
+2.鼠标的class和交互代码
+3.完成直接生成的几何体
+
+问题：
+1.openmesh没法读取到obj文件中的normal以及texture坐标
