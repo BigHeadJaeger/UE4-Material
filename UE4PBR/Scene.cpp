@@ -19,6 +19,8 @@ void MyScene::Init()
 	//指定相机初始位置
 	mainCamera.Init(vec3(0, 2, 4), vec3(0, 0, 0));
 
+	//SetDrawMode(drawMode.isLine, false);
+	drawMode.isLine = false;
 
 
 
@@ -136,7 +138,18 @@ void MyScene::Draw()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);					//三维物体要开启背面剔除
-	glPolygonMode(GL_FRONT, GL_LINE);
+
+	if (drawMode.isLine)
+	{
+		glDisable(GL_CULL_FACE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
+	else
+	{
+		glEnable(GL_CULL_FACE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+
 	//glFrontFace(GL_CW);
 	//glCullFace(GL_FRONT);
 

@@ -110,6 +110,11 @@ void key_callback(GLFWwindow * window, int key, int scancode, int action, int mo
 	if (key == GLFW_KEY_D && action == GLFW_RELEASE)
 		scene.keys[BTND].BindUpEvent([]() {
 			});
+
+	if (key == GLFW_KEY_1 && action == GLFW_PRESS)
+		scene.keys[BTN1].BindDownEvent([]() {
+		scene.drawMode.isLine = !scene.drawMode.isLine;
+			});
 }
 
 //void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
