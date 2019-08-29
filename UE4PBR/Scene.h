@@ -44,6 +44,8 @@ public:
 	//vector<Key> keys;
 	map<KEYNAME, Key> keys;
 
+	Mouse mouse;
+
 	DrawMode drawMode;
 	//---------------------------------------------------------------------------------
 

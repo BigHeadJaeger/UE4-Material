@@ -9,7 +9,7 @@ Camera::Camera()
 	eyePos = vec3(0.0, 0.0, 0.0);
 	view = mat4(0);
 	pro = mat4(0);
-	cameraSpeed = 0.1;
+	cameraSpeed = 2;
 }
 
 void Camera::Init(vec3 pos, vec3 point)
