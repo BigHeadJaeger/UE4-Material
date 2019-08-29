@@ -6,6 +6,8 @@
 //const GLuint WIDTH = 1200, HEIGHT = 1000;
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
 
 MyScene scene;
 
@@ -37,6 +39,9 @@ int main(void)
 	glfwSetKeyCallback(window, key_callback);			//键盘事件
 	//glfwSetInputMode(window, GLFW_STICKY_KEYS, 1);
 
+	glfwSetMouseButtonCallback(window, mouse_button_callback);		//鼠标按键事件
+
+	glfwSetCursorPosCallback(window, cursor_position_callback);		//鼠标指针事件
 
 
 	//创建场景
@@ -76,17 +81,75 @@ int main(void)
 
 void key_callback(GLFWwindow * window, int key, int scancode, int action, int mods)
 {
-	float cameraSpeed = 10.0f*deltaTime;		//设置一个相机移动速度，一帧的时间作为单位
-	if (key == GLFW_KEY_W&&action == GLFW_REPEAT)
-		scene.mainCamera.Walk(cameraSpeed);
-	if (key == GLFW_KEY_S&&action == GLFW_REPEAT)
-		scene.mainCamera.Walk(-cameraSpeed);
-	if (key == GLFW_KEY_A&&action == GLFW_REPEAT)
-		scene.mainCamera.LRMove(cameraSpeed);
-	if (key == GLFW_KEY_D&&action == GLFW_REPEAT)
-		scene.mainCamera.LRMove(-cameraSpeed);
-	if (key == GLFW_KEY_Q&&action == GLFW_REPEAT)
-		scene.mainCamera.LRRotate(cameraSpeed);
-	if (key == GLFW_KEY_E&&action == GLFW_REPEAT)
-		scene.mainCamera.LRRotate(-cameraSpeed);
+	//绑定keep事件后一定要绑定up事件
+	if (key == GLFW_KEY_W && action == GLFW_PRESS)
+		scene.keys[BTNW].BindKeepEvent([]() {
+		scene.mainCamera.Walk(scene.mainCamera.cameraSpeed * deltaTime);
+			});
+	if (key == GLFW_KEY_W && action == GLFW_RELEASE)
+		scene.keys[BTNW].BindUpEvent([]() {
+			});
+
+	if (key == GLFW_KEY_S && action == GLFW_PRESS)
+		scene.keys[BTNS].BindKeepEvent([]() {
+		scene.mainCamera.Walk(-scene.mainCamera.cameraSpeed * deltaTime);
+			});
+	if (key == GLFW_KEY_S && action == GLFW_RELEASE)
+		scene.keys[BTNS].BindUpEvent([]() {
+			});
+
+	if (key == GLFW_KEY_A && action == GLFW_PRESS)
+		scene.keys[BTNA].BindKeepEvent([]() {
+		scene.mainCamera.LRMove(scene.mainCamera.cameraSpeed * deltaTime);
+			});
+	if (key == GLFW_KEY_A && action == GLFW_RELEASE)
+		scene.keys[BTNA].BindUpEvent([]() {
+			});
+
+	if (key == GLFW_KEY_D && action == GLFW_PRESS)
+		scene.keys[BTND].BindKeepEvent([]() {
+		scene.mainCamera.LRMove(-scene.mainCamera.cameraSpeed * deltaTime);
+			});
+	if (key == GLFW_KEY_D && action == GLFW_RELEASE)
+		scene.keys[BTND].BindUpEvent([]() {
+			});
+
+	if (key == GLFW_KEY_1 && action == GLFW_PRESS)
+		scene.keys[BTN1].BindDownEvent([]() {
+		scene.drawMode.isLine = !scene.drawMode.isLine;
+			});
+}
+
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
+		scene.mouse.mouseRightDown = true;
+	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE)
+		scene.mouse.mouseRightDown = false;
+}
+
+void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
+{
+	//cout << xpos << "  " << ypos << endl;
+	if (scene.mouse.mouseRightDown)
+	{
+		float disx = scene.mouse.cursorPrePos.x - xpos;
+		float disy = scene.mouse.cursorPrePos.y - ypos;
+		scene.mainCamera.LRRotate(disx * deltaTime);
+		scene.mainCamera.UDRotate(disy * deltaTime);
+	}
+
+	/*if (scene.mouse.isCatchPoint && scene.mouse.mouseLeftDown)
+	{
+		float disx = scene.mouse.cursorPrePos.x - xpos;
+		float disy = scene.mouse.cursorPrePos.y - ypos;
+
+		float temp = deltaTime * 2;
+		translate(scene.ObjArray()[scene.mouse.catchObjIndex].World, vec3(disx * temp, disy * temp, 0.0));
+	}*/
+
+	scene.mouse.cursorNowPos = scene.mouse.cursorPrePos - vec2(xpos, ypos);
+
+	scene.mouse.cursorPrePos.x = xpos;
+	scene.mouse.cursorPrePos.y = ypos;
 }

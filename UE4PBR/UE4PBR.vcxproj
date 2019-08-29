@@ -126,6 +126,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Const.h" />
+    <ClInclude Include="Interaction.h" />
     <ClInclude Include="MeshObject.h" />
     <ClInclude Include="NewObject.h" />
     <ClInclude Include="Object.h" />
@@ -137,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Interaction.cpp" />
     <ClCompile Include="MeshObject.cpp" />
     <ClCompile Include="NewObject.cpp" />
     <ClCompile Include="Object.cpp" />

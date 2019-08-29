@@ -19,13 +19,15 @@ void MyScene::Init()
 	//指定相机初始位置
 	mainCamera.Init(vec3(0, 2, 4), vec3(0, 0, 0));
 
+	//SetDrawMode(drawMode.isLine, false);
+	drawMode.isLine = false;
 
 
 
 	//指定物体PBR材质
 	cow.readObjFile("OBJ\\cow.obj");
 	cow.getTransform().SetPosition(vec3(0, 0, 0));
-	//cow.getTransform().SetScaler(vec3(3.0));
+	cow.getTransform().SetScaler(vec3(3.0));
 	cow.getShaderData().bUseTexture = false;
 	cow.InitVertexBuffer();
 
@@ -79,6 +81,16 @@ void MyScene::Init()
 	//STInit();
 }
 
+void MyScene::InitKeys()
+{
+	keys.insert(pair<KEYNAME, Key>(BTNW, Key(BTNW)));
+	keys.insert(pair<KEYNAME, Key>(BTNA, Key(BTNA)));
+	keys.insert(pair<KEYNAME, Key>(BTNS, Key(BTNS)));
+	keys.insert(pair<KEYNAME, Key>(BTND, Key(BTND)));
+	keys.insert(pair<KEYNAME, Key>(BTN1, Key(BTN1)));
+	//keys.push_back(Key(BTNW));
+}
+
 void MyScene::Update()
 {
 
@@ -91,6 +103,12 @@ void MyScene::Update()
 	//myBox.SetObjMat(camera.view, camera.pro);
 	//myBucket.SetObjMat(camera.view, camera.pro);
 	//myGrid.SetObjMat(camera.view, camera.pro);
+
+	map<KEYNAME, Key>::iterator it;
+	for (it = keys.begin(); it != keys.end(); it++)
+	{
+		it->second.Execute();
+	}
 
 
 	//光照相关-----
@@ -120,7 +138,18 @@ void MyScene::Draw()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);					//三维物体要开启背面剔除
-	glPolygonMode(GL_FRONT, GL_LINE);
+
+	if (drawMode.isLine)
+	{
+		glDisable(GL_CULL_FACE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
+	else
+	{
+		glEnable(GL_CULL_FACE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+
 	//glFrontFace(GL_CW);
 	//glCullFace(GL_FRONT);
 
