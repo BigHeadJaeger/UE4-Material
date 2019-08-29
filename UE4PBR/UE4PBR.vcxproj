@@ -138,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Interaction.cpp" />
     <ClCompile Include="MeshObject.cpp" />
     <ClCompile Include="NewObject.cpp" />
     <ClCompile Include="Object.cpp" />

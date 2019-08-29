@@ -11,6 +11,7 @@ enum KEYNAME
 	BTNS,
 	BTND,
 	BTN1,
+	NONE,
 };
 
 //鼠标的状态和信息
@@ -35,44 +36,6 @@ struct Mouse
 	}
 };
 
-//struct KeyBoard
-//{
-//	bool btnStateW;
-//	bool btnStateA;
-//	bool btnStateS;
-//	bool btnStateD;
-//	bool btnState1;
-//
-//	bool btnStateG;
-//
-//	KeyBoard()
-//	{
-//		btnStateW = false;
-//		btnStateA = false;
-//		btnStateS = false;
-//		btnStateD = false;
-//		btnState1 = false;
-//		btnStateG = false;
-//	}
-//};
-//
-//class Interaction
-//{
-//public:
-//	KeyBoard keyBoard;
-//	Mouse mouse;
-//	
-//public:
-//	template<typename F>
-//	void ExecuteBtnEvent(F funtion)
-//};
-//enum EventType
-//{
-//	DOWN,
-//	KEEP,
-//	UP,
-//	NONE
-//};
 class Key
 {
 public:
@@ -81,13 +44,22 @@ public:
 	function<void()> eventFunctionPtr;
 	function<void()> outerFunction;
 private:
-	void EventDown();
 	void EventKeep();
 	void EventUP();
+	void EventDown();
+
 public:
+	Key()
+	{
+		keyName = NONE;
+		eventFunctionPtr = NULL;
+		outerFunction = NULL;
+	}
 	Key(KEYNAME name)
 	{
 		keyName = name;
+		eventFunctionPtr = NULL;
+		outerFunction = NULL;
 	}
 
 
@@ -98,44 +70,24 @@ public:
 	template<typename F>
 	void BindDownEvent(F f)
 	{
-		eventFunctionPtr = bind(EventDown);
+		eventFunctionPtr = bind(&Key::EventDown, this);
 		outerFunction = bind(f);
 	}
-	//template<typename F>
-	//void BindDownEvent(F f,float a)
-	//{
-	//	eventFunctionPtr = bind(EventDown);
-	//	//eventType = EventType::DOWN;
-	//	outerFunction = bind(f, a);
-	//}
 
 	template<typename F>
 	void BindKeepEvent(F f)
 	{
-		eventFunctionPtr = bind(EventDown);
+		eventFunctionPtr = bind(&Key::EventKeep, this);
 		outerFunction = bind(f);
 	}
-	//template<typename F>
-	//void BindKeepEvent(F f, float a)
-	//{
-	//	eventFunctionPtr = bind(EventDown);
-	//	outerFunction = bind(f, a);
-	//}
 
 	template<typename F>
 	void BindUpEvent(F f)
 	{
-		eventFunctionPtr = bind(EventDown);
+		eventFunctionPtr = bind(&Key::EventUP, this);
 		outerFunction = bind(f);
 	}
-	//template<typename F>
-	//void BindUpEvent(F f, float a)
-	//{
-	//	eventFunctionPtr = bind(EventDown);
-	//	outerFunction = bind(f, a);
-	//}
 
-	//void BindUpEvent() { eventType = EventType::UP; }
 	void UnBind()
 	{
 		eventFunctionPtr = NULL;

@@ -25,7 +25,7 @@ void MyScene::Init()
 	//指定物体PBR材质
 	cow.readObjFile("OBJ\\cow.obj");
 	cow.getTransform().SetPosition(vec3(0, 0, 0));
-	//cow.getTransform().SetScaler(vec3(3.0));
+	cow.getTransform().SetScaler(vec3(3.0));
 	cow.getShaderData().bUseTexture = false;
 	cow.InitVertexBuffer();
 
@@ -81,7 +81,12 @@ void MyScene::Init()
 
 void MyScene::InitKeys()
 {
-	keys.push_back(Key(BTNW));
+	keys.insert(pair<KEYNAME, Key>(BTNW, Key(BTNW)));
+	keys.insert(pair<KEYNAME, Key>(BTNA, Key(BTNA)));
+	keys.insert(pair<KEYNAME, Key>(BTNS, Key(BTNS)));
+	keys.insert(pair<KEYNAME, Key>(BTND, Key(BTND)));
+	keys.insert(pair<KEYNAME, Key>(BTN1, Key(BTN1)));
+	//keys.push_back(Key(BTNW));
 }
 
 void MyScene::Update()
@@ -96,6 +101,12 @@ void MyScene::Update()
 	//myBox.SetObjMat(camera.view, camera.pro);
 	//myBucket.SetObjMat(camera.view, camera.pro);
 	//myGrid.SetObjMat(camera.view, camera.pro);
+
+	map<KEYNAME, Key>::iterator it;
+	for (it = keys.begin(); it != keys.end(); it++)
+	{
+		it->second.Execute();
+	}
 
 
 	//光照相关-----

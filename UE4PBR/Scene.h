@@ -8,6 +8,8 @@
 //#include"Camera.h"
 //#include"Object.h"
 //using namespace glm;
+#include<map>
+using namespace std;
 #include"MeshObject.h"
 #include"Interaction.h"
 class MyScene
@@ -61,7 +63,8 @@ public:
 	//Па»ъ
 	//MyCamera camera;
 	Camera mainCamera;
-	vector<Key> keys;
+	//vector<Key> keys;
+	map<KEYNAME, Key> keys;
 	//---------------------------------------------------------------------------------
 
 private:
