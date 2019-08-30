@@ -1,11 +1,9 @@
 #pragma once
 #include<string>
-#include<gtc\matrix_transform.hpp>
-#include<gtc\type_ptr.hpp>
 using namespace std;
 #include"ShaderData.h"
 #include"Program.h"
-
+#include"DataConvey.h"
 
 #pragma once
 //基类Object
@@ -18,13 +16,13 @@ protected:
 	MeshData meshData;
 
 protected:
-	//传texture到shader中
-	void SetTexture(GLuint& texId, int num, GLenum texNum, string samplerName, ShaderProgram& p);
-	//根据不同类型的值用重载的方式传入shader中
-	void SetUniform(string valueName, mat4x4& value, ShaderProgram& p);
-	void SetUniform(string valueName, vec4& value, ShaderProgram& p);
-	void SetUniform(string valueName, vec3& value, ShaderProgram& p);
-	void SetUniform(string valueName, float value, ShaderProgram& p);
+	////传texture到shader中
+	//void SetTexture(GLuint& texId, int num, GLenum texNum, string samplerName, ShaderProgram& p);
+	////根据不同类型的值用重载的方式传入shader中
+	//void SetUniform(string valueName, mat4x4& value, ShaderProgram& p);
+	//void SetUniform(string valueName, vec4& value, ShaderProgram& p);
+	//void SetUniform(string valueName, vec3& value, ShaderProgram& p);
+	//void SetUniform(string valueName, float value, ShaderProgram& p);
 public:
 
 	Object()

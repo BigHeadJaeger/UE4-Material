@@ -48,6 +48,9 @@
     <ClInclude Include="Interaction.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DataConvey.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Program.cpp">
@@ -78,6 +81,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Interaction.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DataConvey.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
