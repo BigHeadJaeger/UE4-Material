@@ -1,5 +1,6 @@
 #pragma once
 #include"NewObject.h"
+#include"Const.h"
 
 class GeometryObject :public Object
 {
@@ -45,9 +46,13 @@ protected:
 	float radius;
 	int slice;
 	int stack;
+
+	static int sphereCount;
 public:
 	Sphere()
 	{
+		sphereCount++;
+		name = "sphere" + to_string(sphereCount);
 		radius = 1;
 		slice = 10;
 		stack = 10;
@@ -59,7 +64,10 @@ public:
 		stack = _stack;
 		name = _name;
 	}
-
+	~Sphere()
+	{
+		sphereCount--;
+	}
 	void InitData();
 };
 

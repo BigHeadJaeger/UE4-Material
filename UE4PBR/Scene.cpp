@@ -49,8 +49,15 @@ void MyScene::Init()
 	box.InitMetallic("Material\\metalgrid2-dx\\metalgrid2_metallic.png");
 	box.InitVertexBuffer();
 
+	Sphere sphere(0.5, 20, 20, "a");
+	sphere.InitData();
+	sphere.GetTransform().SetPosition(vec3(0, 1, 0));
+	sphere.GetShaderData().bUseTexture = false;
+	sphere.InitVertexBuffer();
+
 	objects.insert(pair<string, Object>(cow.GetName(), cow));
 	objects.insert(pair<string, Object>(box.GetName(), box));
+	objects.insert(pair<string, Object>(sphere.GetName(), sphere));
 
 	//myBox.InitDirectBox(1, 1, 1);					//顶点、索引信息初始化
 	//myBox.InitBuffers();							//缓冲初始化
