@@ -112,6 +112,7 @@ void main()
 	vec3 color=vec3(1.0,0.0,0.0);
 	if(useTexture)
 	{
+		color=vec3(0.0,0.0,0.0);
 		vec3 albedo;
 		float roughness;
 		float ao;
@@ -154,6 +155,7 @@ void main()
 
 	//计算辐射度(根据入射方向以及夹角求)
 	vec3 lightDir=normalize(lightPos-posW);				//计算光照向量
+
 	vec3 H=normalize(V+lightDir);									//计算中间向量
 
 

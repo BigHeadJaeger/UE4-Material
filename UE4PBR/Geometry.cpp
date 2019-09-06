@@ -98,9 +98,10 @@ void Box::InitData()
 	face_vhandles.push_back(vHandles[1]);
 	meshData.mesh.add_face(face_vhandles);
 
-	//自动计算法向量
+	//计算法向量
 	meshData.mesh.request_vertex_normals();
 	meshData.mesh.request_face_normals();
 	meshData.mesh.update_normals();
+	meshData.mesh.release_face_normals();
 
 }

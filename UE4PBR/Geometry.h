@@ -25,8 +25,9 @@ public:
 		depth = 1;
 	}
 
-	Box(float _width, float _height, float _depth)
+	Box(float _width, float _height, float _depth, string _name)
 	{
+		name = _name;
 		width = _width;
 		height = _height;
 		depth = _depth;
@@ -40,8 +41,26 @@ public:
 
 class Sphere :public GeometryObject
 {
+protected:
+	float radius;
+	int slice;
+	int stack;
 public:
-	void InitData(float radius, int slice, int stack);
+	Sphere()
+	{
+		radius = 1;
+		slice = 10;
+		stack = 10;
+	}
+	Sphere(float _radius, int _slice, int _stack, string _name)
+	{
+		radius = _radius;
+		slice = _slice;
+		stack = _stack;
+		name = _name;
+	}
+
+	void InitData();
 };
 
 class Grid :public GeometryObject

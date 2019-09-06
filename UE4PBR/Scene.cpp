@@ -17,6 +17,7 @@ void MyScene::Init()
 	//指定光源参数
 	lightPos = vec3(-3, 5, 3);
 	lightColor = vec3(400.f, 400.f, 400.f);
+	
 
 	//指定相机初始位置
 	mainCamera.Init(vec3(0, 2, 4), vec3(0, 0, 0));
@@ -36,11 +37,16 @@ void MyScene::Init()
 	cow.GetShaderData().bUseTexture = false;
 	cow.InitVertexBuffer();
 
-	Box box(1, 1, 1);
+	Box box(1, 1, 1, "b");
 	box.InitData();
 	box.GetTransform().SetPosition(vec3(0, 0, 0));
 	//box.GetTransform().
-	box.GetShaderData().bUseTexture = false;
+	box.GetShaderData().bUseTexture = true;
+	box.InitAlbedo("Material\\metalgrid2-dx\\metalgrid2_basecolor.png");
+	box.InitNormal("Material\\metalgrid2-dx\\metalgrid2_normal-dx.png");
+	box.InitAo("Material\\metalgrid2-dx\\metalgrid2_AO.png");
+	box.InitRoughness("Material\\metalgrid2-dx\\metalgrid2_roughness.png");
+	box.InitMetallic("Material\\metalgrid2-dx\\metalgrid2_metallic.png");
 	box.InitVertexBuffer();
 
 	objects.insert(pair<string, Object>(cow.GetName(), cow));
@@ -79,6 +85,11 @@ void MyScene::Update()
 	mainCamera.SetView();
 	//计算投影矩阵
 	mainCamera.SetPro();
+
+	ConveyTool* conveyTool = ConveyTool::GetConveyTool();
+	conveyTool->SetUniform("eyePos", mainCamera.eyePos, p1);
+	conveyTool->SetUniform("lightPos", lightPos, p1);
+	conveyTool->SetUniform("lightColor", lightColor, p1);
 
 	//遍历所有object更新矩阵
 	map<string, Object>::iterator objs_it;
