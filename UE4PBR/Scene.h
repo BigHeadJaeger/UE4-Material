@@ -2,6 +2,7 @@
 #include<map>
 using namespace std;
 #include"MeshObject.h"
+#include"Geometry.h"
 #include"Interaction.h"
 
 struct DrawMode
