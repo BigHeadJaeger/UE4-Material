@@ -49,6 +49,8 @@ public:
 	GLuint tShadowTex;				//阴影贴图
 	bool bShadowTex;
 
+	float u, v;
+
 public:
 	ShaderData()
 	{
@@ -63,9 +65,13 @@ public:
 		bAo = false;
 		bNormal = false;
 		bShadowTex = false;
+
+		u = 1;
+		v = 1;
 	}
 
 	void UpdateMatrix(Transform& t, Camera& camera);
 	void InitTexture(GLuint& texID, string texPath);		//生成纹理对象并绑定数据(将图片转化为纹理数据，根据不同的ID设置相应的纹理)
-	void InitVertexBuffer(MeshData& mesh);							
+	void InitVertexBuffer(MeshData& mesh);		
+	void SetUV(float _u, float _v) { u = _u; v = _v; }
 };

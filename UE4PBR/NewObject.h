@@ -18,7 +18,6 @@ public:
 
 	Object()
 	{
-
 	}
 
 	Object(string _name)
@@ -32,6 +31,7 @@ public:
 	MeshData& GetMeshData() { return meshData; }
 
 	void SetName(string _name) { name = _name; }
+	void SetUV(float _u, float _v) { shaderData.SetUV(_u, _v); }
 
 	void UpdateMatrix(Camera& camera) { shaderData.UpdateMatrix(transformation, camera); }
 	void InitVertexBuffer() { shaderData.InitVertexBuffer(meshData); }

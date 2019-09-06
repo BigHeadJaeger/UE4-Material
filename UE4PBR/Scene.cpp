@@ -32,7 +32,7 @@ void MyScene::Init()
 	MeshObject cow("cow");
 	//cow.SetName("cow");
 	cow.readObjFile("OBJ\\cow.obj");
-	cow.GetTransform().SetPosition(vec3(3, 0, 0));
+	cow.GetTransform().SetPosition(vec3(3, 0.5, 0));
 	cow.GetTransform().SetScaler(vec3(3.0));
 	cow.GetShaderData().bUseTexture = false;
 	cow.InitVertexBuffer();
@@ -55,9 +55,23 @@ void MyScene::Init()
 	sphere.GetShaderData().bUseTexture = false;
 	sphere.InitVertexBuffer();
 
+	Grid grid(10, 10, 10, 10, "c");
+	grid.InitData();
+	grid.GetTransform().SetPosition(vec3(0, -0.5, 0));
+	grid.GetShaderData().bUseTexture = true;
+	grid.InitAlbedo("Material\\oakfloor\\oakfloor_basecolor.png");
+	grid.InitNormal("Material\\oakfloor\\oakfloor_normal.png");
+	grid.InitAo("Material\\oakfloor\\oakfloor_AO.png");
+	grid.InitRoughness("Material\\oakfloor\\oakfloor_roughness.png");
+	grid.SetUV(0.3, 0.3);
+	//grid.InitMetallic("Material\\oakfloor\\metalgrid2_metallic.png");
+	grid.InitVertexBuffer();
+
 	objects.insert(pair<string, Object>(cow.GetName(), cow));
 	objects.insert(pair<string, Object>(box.GetName(), box));
 	objects.insert(pair<string, Object>(sphere.GetName(), sphere));
+	objects.insert(pair<string, Object>(grid.GetName(), grid));
+
 
 	//myBox.InitDirectBox(1, 1, 1);					//顶点、索引信息初始化
 	//myBox.InitBuffers();							//缓冲初始化

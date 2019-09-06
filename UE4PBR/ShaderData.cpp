@@ -60,8 +60,8 @@ void ShaderData::InitVertexBuffer(MeshData& meshData)
 
 			if (meshData.providedTex)
 			{
-				vertexTex.push_back(meshData.mesh.texcoord2D(*fv_ccwit).data()[0]);
-				vertexTex.push_back(meshData.mesh.texcoord2D(*fv_ccwit).data()[1]);
+				vertexTex.push_back(meshData.mesh.texcoord2D(*fv_ccwit).data()[0] * u);
+				vertexTex.push_back(meshData.mesh.texcoord2D(*fv_ccwit).data()[1] * v);
 			}
 		}
 	}
