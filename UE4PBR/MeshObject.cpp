@@ -1,5 +1,7 @@
 #include "MeshObject.h"
 
+int MeshObject::meshObjectCount = 0;
+
 void MeshObject::readObjFile(string fileName)
 {
 	meshData.mesh.request_vertex_normals();

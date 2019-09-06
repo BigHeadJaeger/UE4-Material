@@ -28,8 +28,8 @@ void MyScene::Init()
 	
 
 	//指定物体PBR材质
-	MeshObject cow;
-	cow.SetName("cow");
+	MeshObject cow("cow");
+	//cow.SetName("cow");
 	cow.readObjFile("OBJ\\cow.obj");
 	cow.GetTransform().SetPosition(vec3(0, 0, 0));
 	cow.GetTransform().SetScaler(vec3(3.0));

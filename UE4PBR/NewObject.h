@@ -14,7 +14,6 @@ protected:
 	Transform transformation;				//和空间位置有关的transform组件
 	ShaderData shaderData;					//和OpenGL相关的渲染组件
 	MeshData meshData;
-
 public:
 
 	Object()
