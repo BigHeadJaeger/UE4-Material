@@ -52,7 +52,7 @@ public:
 	Sphere()
 	{
 		sphereCount++;
-		name = "sphere" + to_string(sphereCount);
+		name = "Sphere" + to_string(sphereCount);
 		radius = 1;
 		slice = 10;
 		stack = 10;
@@ -73,6 +73,33 @@ public:
 
 class Grid :public GeometryObject
 {
+	float width;
+	float height;
+	int m;
+	int n;
+
+	static int gridCount;
 public:
-	void InitData(float width, float height, int m, int n);
+	Grid()
+	{
+		gridCount++;
+		name = "Grid" + to_string(gridCount);
+		width = 1;
+		height = 1;
+		m = 10;
+		n = 10;
+	}
+	Grid(float _width, float _height, int _m, int _n, string _name)
+	{
+		name = _name;
+		width = _width;
+		height = _height;
+		m = _m;
+		n = _n;
+	}
+	~Grid()
+	{
+		gridCount--;
+	}
+	void InitData();
 };

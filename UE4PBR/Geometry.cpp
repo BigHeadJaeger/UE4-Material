@@ -157,8 +157,6 @@ void Sphere::InitData()
 
 	Mesh::VertexHandle* vHandles;
 	vHandles = new Mesh::VertexHandle[nVerts];
-	//pointsData.resize(nVerts);
-	//renderIndex.resize(nIndices);
 
 	for (int i = 1; i <= nRows; ++i)
 	{
@@ -175,18 +173,8 @@ void Sphere::InitData()
 
 			//位置坐标
 			vHandles[index] = meshData.mesh.add_vertex(Mesh::Point(x, y, z));
-			//pointsData[index].vertex = vec3(x, y, z);
-			//法线
-			//vec3 N = vec3(x, y, z);
-			//meshData.mesh.set_normal(vHandles[index],OpenMesh::Vec3f(x, y, z))
-			//pointsData[index].normal = N;
-			//XMStoreFloat3(&pointsData[index].normal, XMVector3Normalize(N));
-			//切线
-			/*XMVECTOR T = XMVectorSet(-sin(theta), 0.f, cos(theta), 0.f);
-			XMStoreFloat3(&pointsData[index].tangent, XMVector3Normalize(T));*/
 			//纹理坐标
 			meshData.mesh.set_texcoord2D(vHandles[index], OpenMesh::Vec2f(j * 1.f / slice, i * 1.f / stack));
-			//pointsData[index].texcoord = vec2(j*1.f / slice, i*1.f / stack);
 		}
 	}
 
@@ -194,14 +182,9 @@ void Sphere::InitData()
 	//添加顶部和底部两个顶点信息
 	vHandles[size] = meshData.mesh.add_vertex(Mesh::Point(0.f, radius, 0.f));
 	meshData.mesh.set_texcoord2D(vHandles[size], OpenMesh::Vec2f(0.f, 0.f));
-	//pointsData[size].texcoord = vec2(0.f, 0.f);
 
 	vHandles[size + 1] = meshData.mesh.add_vertex(Mesh::Point(0.f, -radius, 0.f));
 	meshData.mesh.set_texcoord2D(vHandles[size + 1], OpenMesh::Vec2f(0.f, 1.f));
-	//pointsData[size + 1].vertex = vec3(0.f, -radius, 0.f);
-	//pointsData[size + 1].normal = vec3(0.f, -1.f, 0.f);
-	////pointsData[size + 1].tangent = vec3(1.f, 0.f, 0.f);
-	//pointsData[size + 1].texcoord = vec2(0.f, 1.f);
 
 	int tmp(0);
 	int start1 = 0;
@@ -216,11 +199,6 @@ void Sphere::InitData()
 		face_vhandles.push_back(vHandles[start1 + i + 1]);
 		face_vhandles.push_back(vHandles[start1 + i]);
 		meshData.mesh.add_face(face_vhandles);
-		//renderIndex[tmp] = top;
-		//renderIndex[tmp + 1] = start1 + i + 1;
-		//renderIndex[tmp + 2] = start1 + i;
-
-		//tmp += 3;
 	}
 
 	for (int i = 0; i < slice; ++i)
@@ -230,12 +208,6 @@ void Sphere::InitData()
 		face_vhandles.push_back(vHandles[start2 + i]);
 		face_vhandles.push_back(vHandles[start2 + i + 1]);
 		meshData.mesh.add_face(face_vhandles);
-
-		//renderIndex[tmp] = bottom;
-		//renderIndex[tmp + 1] = start2 + i;
-		//renderIndex[tmp + 2] = start2 + i + 1;
-
-		//tmp += 3;
 	}
 
 	for (int i = 0; i < nRows - 1; ++i)
@@ -253,19 +225,73 @@ void Sphere::InitData()
 			face_vhandles.push_back(vHandles[i * vertsPerRow + j + 1]);
 			face_vhandles.push_back(vHandles[(i + 1) * vertsPerRow + j + 1]);
 			meshData.mesh.add_face(face_vhandles);
-
-			//renderIndex[tmp] = i * vertsPerRow + j;
-			//renderIndex[tmp + 1] = (i + 1) * vertsPerRow + j + 1;
-			//renderIndex[tmp + 2] = (i + 1) * vertsPerRow + j;
-			//renderIndex[tmp + 3] = i * vertsPerRow + j;
-			//renderIndex[tmp + 4] = i * vertsPerRow + j + 1;
-			//renderIndex[tmp + 5] = (i + 1) * vertsPerRow + j + 1;
-
-			//tmp += 6;
 		}
 	}
 
 	delete[]vHandles;
+
+	//计算法向量
+	meshData.mesh.request_vertex_normals();
+	meshData.mesh.request_face_normals();
+	meshData.mesh.update_normals();
+	meshData.mesh.release_face_normals();
+}
+
+int Grid::gridCount = 0;
+void Grid::InitData()
+{
+	meshData.providedTex = true;
+	meshData.mesh.request_vertex_texcoords2D();
+
+	int nVertsRow = m + 1;			//x方向顶点数
+	int nVertsCol = n + 1;			//z方向顶点数
+
+	float oX = -width * 0.5f;			//x方向的起始位置
+	float oZ = height * 0.5f;			//z方向的起始位置
+
+	float dX = width / m;			//变化率
+	float dZ = height / n;
+
+	Mesh::VertexHandle* vHandles;
+	vHandles = new Mesh::VertexHandle[nVertsCol * nVertsRow];
+	//pointsData.resize(nVertsCol * nVertsRow);
+
+	//从左上角开始逐行添加顶点信息
+	for (int i = 0; i < nVertsCol; i++)
+	{
+		float tempZ = oZ - dZ * i;
+		for (int j = 0; j < nVertsRow; j++)
+		{
+			int index = i * nVertsRow + j;
+			//顶点
+			vHandles[index] = meshData.mesh.add_vertex(Mesh::Point(oX + dX * j, 0.f, tempZ));
+			//纹理
+			meshData.mesh.set_texcoord2D(vHandles[index], OpenMesh::Vec2f(dX * j, dZ * i));
+		}
+	}
+
+	//一共m*n个格子，一个格子分为两个三角形则有6个顶点
+	int temp = 0;
+	std::vector<Mesh::VertexHandle>  face_vhandles;
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < m; j++)
+		{
+			face_vhandles.clear();
+			face_vhandles.push_back(vHandles[i * nVertsRow + j]);
+			face_vhandles.push_back(vHandles[i * nVertsRow + j + 1]);
+			face_vhandles.push_back(vHandles[(i + 1) * nVertsRow + j]);
+			meshData.mesh.add_face(face_vhandles);
+
+			face_vhandles.clear();
+			face_vhandles.push_back(vHandles[i * nVertsRow + j + 1]);
+			face_vhandles.push_back(vHandles[(i + 1) * nVertsRow + j + 1]);
+			face_vhandles.push_back(vHandles[(i + 1) * nVertsRow + j]);
+			meshData.mesh.add_face(face_vhandles);
+		}
+	}
+
+	delete[] vHandles;
 
 	//计算法向量
 	meshData.mesh.request_vertex_normals();
